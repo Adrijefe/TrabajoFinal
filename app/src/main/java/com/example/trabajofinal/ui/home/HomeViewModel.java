@@ -160,6 +160,7 @@ public class HomeViewModel extends AndroidViewModel {
             try {
                 addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+
                 currentLatLng.postValue(latlng);
 
 
@@ -179,7 +180,6 @@ public class HomeViewModel extends AndroidViewModel {
                     resultMessage = TextUtils.join("\n", addressParts);
                     String finalResultMessage = resultMessage;
                     handler.post(() -> {
-                        // Aquest codi s'executa en primer pla.
                         if (mTrackingLocation)
                             currentAddress.postValue(String.format("Direcció: %1$s \n Hora: %2$tr", finalResultMessage, System.currentTimeMillis()));
                     });
