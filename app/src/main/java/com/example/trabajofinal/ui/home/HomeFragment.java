@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
             reseña.setDireccio(binding.txtAddress.getText().toString());
             reseña.setLatitud(binding.txtLatitud.getText().toString());
             reseña.setLongitud(binding.txtLongitud.getText().toString());
-            reseña.setProblema(binding.txtReview.getText().toString());
+            reseña.setResena(binding.txtReview.getText().toString());
 
             DatabaseReference base = FirebaseDatabase.getInstance("https://adrianpeiro18-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
 

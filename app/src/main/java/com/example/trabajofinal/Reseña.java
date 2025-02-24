@@ -3,24 +3,24 @@ package com.example.trabajofinal;
 import android.widget.ProgressBar;
 
 public class Reseña {
-    private String restaurantName;
-    private String direccio;
-    private String latitud;
-    private String longitud;
-    private String resena;
+    String restaurantName;
+    String direccio;
+    String latitud;
+    String longitud;
+    String resena;
+    String url;
 
     public Reseña() {
     }
 
-    // Constructor con
-    public Reseña(String restaurantName, String direccio, String latitud, String longitud, String problema) {
+    public Reseña(String restaurantName, String direccio, String latitud, String longitud, String resena, String url) {
         this.restaurantName = restaurantName;
         this.direccio = direccio;
         this.latitud = latitud;
         this.longitud = longitud;
-        this.resena = problema;
+        this.resena = resena;
+        this.url = url;
     }
-
 
     public String getRestaurantName() {
         return restaurantName;
@@ -54,11 +54,20 @@ public class Reseña {
         this.longitud = longitud;
     }
 
-    public String getProblema() {
+    public String getResena() {
         return resena;
     }
 
-    public void setProblema(String problema) {
-        this.resena = problema;
+    public void setResena(String resena) {
+        this.resena = resena;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
+

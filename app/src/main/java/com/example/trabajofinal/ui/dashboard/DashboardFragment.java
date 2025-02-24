@@ -66,7 +66,7 @@ public class DashboardFragment extends Fragment {
 
         @Override
         protected void onBindViewHolder(@NonNull ReseñaViewholder holder, int position, @NonNull Reseña model) {
-            holder.binding.txtDescripcio.setText(model.getProblema());
+            holder.binding.txtDescripcio.setText(model.getResena());
             holder.binding.txtAdreca.setText(model.getDireccio());
         }
 
