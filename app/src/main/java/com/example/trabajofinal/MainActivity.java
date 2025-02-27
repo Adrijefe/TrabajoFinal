@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        Log.e("XXXX", String.valueOf(auth.getCurrentUser()));
+        Log.d("XXXX", String.valueOf(auth.getCurrentUser()));
         if (auth.getCurrentUser() == null) {
             Intent signInIntent =
                     AuthUI.getInstance()

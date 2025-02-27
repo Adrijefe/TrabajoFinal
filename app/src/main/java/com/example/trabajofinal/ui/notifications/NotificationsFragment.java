@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.example.trabajofinal.R;
 import com.example.trabajofinal.Reseña;
 import com.example.trabajofinal.ui.home.HomeFragment;
 import com.example.trabajofinal.ui.home.HomeViewModel;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -41,12 +43,6 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.example.trabajofinal.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
@@ -84,6 +80,16 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
+        // Para que me salga en la vall.
+            GeoPoint miUbi = new GeoPoint(39.8233, -0.232562);
+        mapController.setCenter(miUbi);
+
+        Marker startMarker = new Marker(binding.map);
+        startMarker.setPosition(miUbi);
+        startMarker.setTitle("Casa");
+        startMarker.setIcon(requireContext().getDrawable(R.drawable.ic_home_black_24dp));
+        binding.map.getOverlays().add(startMarker);
+
 
         //ubicación del usuario
         MyLocationNewOverlay myLocationNewOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), binding.map);
@@ -95,34 +101,38 @@ public class NotificationsFragment extends Fragment {
         compassOverlay.enableCompass();
         binding.map.getOverlays().add(compassOverlay);
 
+
         // Conectar a Firebase
         auth = FirebaseAuth.getInstance();
-        DatabaseReference base = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference base = FirebaseDatabase.getInstance("https://adrianpeiro18-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
         DatabaseReference users = base.child("users");
         DatabaseReference uid = users.child(auth.getUid());
-        incidencies = uid.child("Resenas");
+        incidencies = uid.child("reseñas");
+        Log.d("XXX",incidencies.toString());
+
 
 
         // Obtener incidencias de Firebase y mostrar marcadores
         incidencies.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                Reseña resena = dataSnapshot.getValue(Reseña.class);
-
-                if (resena != null) {
-                    GeoPoint location = new GeoPoint(
-                            Double.parseDouble(resena.getLatitud()),
-                            Double.parseDouble(resena.getLongitud())
-                    );
-
-                    Marker marker = new Marker(binding.map);
-                    marker.setPosition(location);
-                    marker.setTitle(resena.getResena());
-                    marker.setSnippet(resena.getDireccio());
-
-                    binding.map.getOverlays().add(marker);
+                if(binding == null || binding.map == null){
+                    Log.e("FirebaseError", "El fragmento ya no está visible.");
+                    return;
                 }
-            }
+                Reseña resena = dataSnapshot.getValue(Reseña.class);
+                Double latitud = dataSnapshot.child("latitud").getValue(Double.class);
+                Double longitud = dataSnapshot.child("longitud").getValue(Double.class);
+
+                GeoPoint location = new GeoPoint(latitud,longitud);
+
+
+                Marker marker = new Marker(binding.map);
+                marker.setPosition(location);
+                marker.setTitle(resena.getResena());
+                marker.setSnippet(resena.getDireccio());
+                binding.map.getOverlays().add(marker);
+                }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}

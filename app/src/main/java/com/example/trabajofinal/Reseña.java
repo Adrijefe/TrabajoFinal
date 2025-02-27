@@ -5,15 +5,15 @@ import android.widget.ProgressBar;
 public class Reseña {
     String restaurantName;
     String direccio;
-    String latitud;
-    String longitud;
+    Double latitud;
+    Double longitud;
     String resena;
     String url;
 
     public Reseña() {
     }
 
-    public Reseña(String restaurantName, String direccio, String latitud, String longitud, String resena, String url) {
+    public Reseña(String restaurantName, String direccio, Double latitud, Double longitud, String resena, String url) {
         this.restaurantName = restaurantName;
         this.direccio = direccio;
         this.latitud = latitud;
@@ -34,25 +34,26 @@ public class Reseña {
         return direccio;
     }
 
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
+
     public void setDireccio(String direccio) {
         this.direccio = direccio;
     }
 
-    public String getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(String latitud) {
-        this.latitud = latitud;
-    }
-
-    public String getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(String longitud) {
-        this.longitud = longitud;
-    }
 
     public String getResena() {
         return resena;

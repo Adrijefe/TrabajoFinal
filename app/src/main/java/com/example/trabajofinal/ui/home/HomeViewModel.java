@@ -50,7 +50,7 @@ public class HomeViewModel extends AndroidViewModel {
     private boolean mTrackingLocation;
     FusedLocationProviderClient mFusedLocationClient;
 
-    public HomeViewModel(@NonNull Application application){
+    public HomeViewModel(Application application){
         super(application);
         this.app = application;
     }
@@ -67,11 +67,9 @@ public class HomeViewModel extends AndroidViewModel {
     public MutableLiveData<String> getButtonText() {
         return buttonText;
     }
-
     public MutableLiveData<Boolean> getProgressBar() {
         return progressBar;
     }
-
     public LiveData<String> getCheckPermission() {
         return checkPermission;
     }
