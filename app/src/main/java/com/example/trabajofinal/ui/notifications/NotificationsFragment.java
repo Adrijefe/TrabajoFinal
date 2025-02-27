@@ -73,12 +73,12 @@ public class NotificationsFragment extends Fragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
         // ubicación actual
-        sharedViewModel.getCurrentLatLng().observe(getViewLifecycleOwner(), location -> {
-            if (location != null) {
-                GeoPoint geoPoint = new GeoPoint(location.latitude, location.longitude);
-                mapController.setCenter(geoPoint);
-            }
-        });
+//        sharedViewModel.getCurrentLatLng().observe(getViewLifecycleOwner(), location -> {
+//            if (location != null) {
+//                GeoPoint geoPoint = new GeoPoint(location.latitude, location.longitude);
+//                mapController.setCenter(geoPoint);
+//            }
+//        });
 
         // Para que me salga en la vall.
             GeoPoint miUbi = new GeoPoint(39.8233, -0.232562);
@@ -123,15 +123,20 @@ public class NotificationsFragment extends Fragment {
                 Reseña resena = dataSnapshot.getValue(Reseña.class);
                 Double latitud = dataSnapshot.child("latitud").getValue(Double.class);
                 Double longitud = dataSnapshot.child("longitud").getValue(Double.class);
+                if (resena != null){
 
-                GeoPoint location = new GeoPoint(latitud,longitud);
+                    GeoPoint location = new GeoPoint(latitud,longitud);
+                    Marker marker = new Marker(binding.map);
+                    marker.setPosition(location);
+                    marker.setTitle(resena.getRestaurantName());
+                    marker.setSnippet(resena.getResena());
+                    binding.map.getOverlays().add(marker);
+                }
 
 
-                Marker marker = new Marker(binding.map);
-                marker.setPosition(location);
-                marker.setTitle(resena.getResena());
-                marker.setSnippet(resena.getDireccio());
-                binding.map.getOverlays().add(marker);
+
+
+
                 }
 
             @Override
