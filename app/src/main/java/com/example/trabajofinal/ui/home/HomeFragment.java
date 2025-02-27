@@ -1,6 +1,8 @@
 package com.example.trabajofinal.ui.home;
 
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -81,6 +83,7 @@ public class HomeFragment extends Fragment {
 
 
 
+
         binding.buttonSubmit.setOnClickListener(view -> {
             Reseña reseña = new Reseña();
             reseña.setRestaurantName(binding.txtRestaurantName.getText().toString());
@@ -91,6 +94,9 @@ public class HomeFragment extends Fragment {
 
             reseña.setLatitud(latitud);
             reseña.setLongitud(longitud);
+
+            float rating = binding.ratingBar.getRating();
+            reseña.setCalificacion(rating);
 
 
             DatabaseReference base = FirebaseDatabase.getInstance("https://adrianpeiro18-default-rtdb.europe-west1.firebasedatabase.app/").getReference();

@@ -1,25 +1,25 @@
 package com.example.trabajofinal;
 
-import android.widget.ProgressBar;
-
 public class Reseña {
-    String restaurantName;
-    String direccio;
-    Double latitud;
-    Double longitud;
-    String resena;
-    String url;
+    private String restaurantName;
+    private String direccio;
+    private Double latitud;
+    private Double longitud;
+    private String resena;
+    private String url;
+    private float calificacion;
 
     public Reseña() {
     }
 
-    public Reseña(String restaurantName, String direccio, Double latitud, Double longitud, String resena, String url) {
+    public Reseña(String restaurantName, String direccio, Double latitud, Double longitud, String resena, String url, float calificacion) {
         this.restaurantName = restaurantName;
         this.direccio = direccio;
         this.latitud = latitud;
         this.longitud = longitud;
         this.resena = resena;
         this.url = url;
+        this.calificacion = calificacion;
     }
 
     public String getRestaurantName() {
@@ -32,6 +32,10 @@ public class Reseña {
 
     public String getDireccio() {
         return direccio;
+    }
+
+    public void setDireccio(String direccio) {
+        this.direccio = direccio;
     }
 
     public Double getLatitud() {
@@ -50,11 +54,6 @@ public class Reseña {
         this.longitud = longitud;
     }
 
-    public void setDireccio(String direccio) {
-        this.direccio = direccio;
-    }
-
-
     public String getResena() {
         return resena;
     }
@@ -70,5 +69,12 @@ public class Reseña {
     public void setUrl(String url) {
         this.url = url;
     }
-}
 
+    public float getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(float calificacion) {
+        this.calificacion = calificacion;
+    }
+}
