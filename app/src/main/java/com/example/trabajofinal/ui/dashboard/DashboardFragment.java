@@ -19,10 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+//Mostramos la lista de reseñas del firebase
+
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    //creamos y configuramos la vista del fragmento
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
@@ -30,6 +35,7 @@ public class DashboardFragment extends Fragment {
 
         sharedViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
+                // Referencia a la base de datos Firebase
                 DatabaseReference base = FirebaseDatabase.getInstance("https://adrianpeiro18-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
                 DatabaseReference users = base.child("users");
                 DatabaseReference uid = users.child(auth.getUid());
@@ -49,14 +55,20 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        //retorna la vista inflada
+
         return binding.getRoot();
     }
+         //Método que se ejecuta cuando la vista del fragmento se destruye.
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
+    //Adaptador para mostrar las reseñas en el RecyclerView.
 
     class ReseñaAdapter extends FirebaseRecyclerAdapter<Reseña, ReseñaAdapter.ReseñaViewholder> {
 
@@ -75,7 +87,7 @@ public class DashboardFragment extends Fragment {
         public ReseñaViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new ReseñaViewholder(RvResenasBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
-
+        //ViewHolder que contiene la vista de una reseña.
         class ReseñaViewholder extends RecyclerView.ViewHolder {
             RvResenasBinding binding;
 

@@ -34,7 +34,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-// Todo lo de aqui contiene el codigo para poder acceder a los datos que necesitamos y poder mostrarlos.
+// Gestionamos la lógica de la ubicacion y autenticacion
 
 public class HomeViewModel extends AndroidViewModel {
     private final Application app;
@@ -44,36 +44,37 @@ public class HomeViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> progressBar = new MutableLiveData<>();
     private MutableLiveData<FirebaseUser> user = new MutableLiveData<>();
     private final MutableLiveData<LatLng> currentLatLng = new MutableLiveData<>();
-
-
-
     private boolean mTrackingLocation;
+
     FusedLocationProviderClient mFusedLocationClient;
 
+    //Constructor
     public HomeViewModel(Application application){
         super(application);
         this.app = application;
     }
 
 
+    //Configurar cliente de ubicacion
     public void setFusedLocationClient(FusedLocationProviderClient mFusedLocationClient) {
         this.mFusedLocationClient = mFusedLocationClient;
     }
 
+    //obtener direccion actual
     public static LiveData<String> getCurrentAddress() {
         return currentAddress;
     }
 
-    public MutableLiveData<String> getButtonText() {
-        return buttonText;
-    }
+    //Controlar la visibilidad
     public MutableLiveData<Boolean> getProgressBar() {
         return progressBar;
     }
+    //chekear permisos
     public LiveData<String> getCheckPermission() {
         return checkPermission;
     }
 
+    //Calback que se ejecuta cuando  recibe una actualizacion de ubi
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -83,6 +84,7 @@ public class HomeViewModel extends AndroidViewModel {
         }
     };
 
+    //Solicitar ubi
     private LocationRequest getLocationRequest() {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
@@ -91,6 +93,7 @@ public class HomeViewModel extends AndroidViewModel {
         return locationRequest;
     }
 
+    //alterar rastreo
     public void switchTrackingLocation() {
         if (!mTrackingLocation) {
             startTrackingLocation(true);
@@ -99,15 +102,18 @@ public class HomeViewModel extends AndroidViewModel {
         }
 
     }
+    //Obtener el usuario autentico
     public LiveData<FirebaseUser>getUser(){
         return user;
     }
 
+    //Actualizar
     public void setUser(FirebaseUser passedUser){
         user.postValue(passedUser);
     }
 
 
+    //Iniciar el rastreo
 
     @SuppressLint("MissingPermission")
     public void startTrackingLocation(boolean needsChecking) {
@@ -127,6 +133,7 @@ public class HomeViewModel extends AndroidViewModel {
         }
     }
 
+    //Detener el rastreo
 
     private void stopTrackingLocation() {
         if (mTrackingLocation) {
@@ -137,13 +144,10 @@ public class HomeViewModel extends AndroidViewModel {
         }
     }
 
-    //...
-
-    public MutableLiveData<LatLng> getCurrentLatLng() {
-        return currentLatLng;
-    }
 
 
+
+    //Convierte una ubicación en una dirección usando Geocoder
 
     private void fetchAddress(Location location) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -156,6 +160,7 @@ public class HomeViewModel extends AndroidViewModel {
             String resultMessage = "";
 
             try {
+                //obtenemos la direccion a partir de la latitud y longitud
                 addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 

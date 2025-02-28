@@ -130,6 +130,7 @@ public class NotificationsFragment extends Fragment {
                     marker.setPosition(location);
                     marker.setTitle(resena.getRestaurantName());
                     marker.setSnippet(resena.getResena());
+                    marker.setSubDescription(resena.getMensaje());
                     String snippetInfo = "Reseña: " + resena.getResena() + "\nCalificación: " + resena.getCalificacion() + " ★";
                     marker.setSnippet(snippetInfo);
 

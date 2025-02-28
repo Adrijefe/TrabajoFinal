@@ -8,11 +8,12 @@ public class Reseña {
     private String resena;
     private String url;
     private float calificacion;
+    String Mensaje;
 
     public Reseña() {
     }
 
-    public Reseña(String restaurantName, String direccio, Double latitud, Double longitud, String resena, String url, float calificacion) {
+    public Reseña(String restaurantName, String direccio, Double latitud, Double longitud, String resena, String url, float calificacion, String mensaje) {
         this.restaurantName = restaurantName;
         this.direccio = direccio;
         this.latitud = latitud;
@@ -20,6 +21,7 @@ public class Reseña {
         this.resena = resena;
         this.url = url;
         this.calificacion = calificacion;
+        this.Mensaje = mensaje;
     }
 
     public String getRestaurantName() {
@@ -76,5 +78,13 @@ public class Reseña {
 
     public void setCalificacion(float calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public String getMensaje() {
+        return Mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        Mensaje = mensaje;
     }
 }
